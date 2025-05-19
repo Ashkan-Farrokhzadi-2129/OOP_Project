@@ -1,0 +1,9 @@
+# Ignore CLion/JetBrains project settings
+.idea/
+
+# Ignore build directories
+cmake-build-debug/
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
