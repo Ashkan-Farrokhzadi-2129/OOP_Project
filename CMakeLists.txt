@@ -20,4 +20,6 @@ add_executable(OOP_Project
         Model/Inductor.h
         Model/CurrentSource.cpp
         Model/CurrentSource.h
+        Model/VoltageSource.cpp
+        Model/VoltageSource.h
 )
