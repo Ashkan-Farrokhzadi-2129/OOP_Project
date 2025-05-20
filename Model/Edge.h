@@ -8,7 +8,10 @@
 
 
 #include <string>
-#include "Node.h"
+// #include "Node.h"   // REMOVE this include from Edge.h
+
+class Node; // With this forward declaration before the class definition
+
 
 class Edge {
 protected:

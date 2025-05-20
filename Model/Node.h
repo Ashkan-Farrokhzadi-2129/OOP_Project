@@ -4,7 +4,10 @@
 
 #include <vector>
 #include <memory>  // optional if using smart pointers
-#include "Edge.h"
+// #include "Edge.h"    // REMOVE this include from Node.h
+
+class Edge; // With this forward declaration before the class definition
+
 
 class Node {
 private:

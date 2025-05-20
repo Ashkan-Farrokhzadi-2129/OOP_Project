@@ -3,6 +3,7 @@
 //
 
 #include "Edge.h"
+#include "Node.h"
 
 
 // Constructor

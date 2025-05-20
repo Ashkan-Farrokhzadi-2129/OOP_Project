@@ -1,5 +1,6 @@
 // Model/Node.cpp
 #include "Node.h"
+#include "Edge.h"
 #include <algorithm>  // for std::remove
 
 Node::Node(int number, double potential)

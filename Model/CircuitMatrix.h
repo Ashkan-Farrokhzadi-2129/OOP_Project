@@ -1,8 +1,8 @@
 #ifndef CIRCUITMATRIX_H
 #define CIRCUITMATRIX_H
 
-#include <Eigen/Dense>
-#include "Controller/LinearEquationSolver.h"
+// #include <Eigen/Dense>
+#include "LinearEquationSolver.h"
 
 class CircuitMatrix {
 public:
