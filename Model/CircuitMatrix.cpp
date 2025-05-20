@@ -35,3 +35,10 @@ Eigen::VectorXd CircuitMatrix::solve(LinearEquationSolver& solver) {
 
     return x;
 }
+
+void CircuitMatrix::assemble(const std::vector<Edge*>& edges) {
+    for (auto edge : edges) {
+        edge->stamp(*this);  // Polymorphic call
+    }
+}
+

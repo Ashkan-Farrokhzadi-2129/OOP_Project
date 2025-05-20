@@ -9,6 +9,8 @@ public:
 
     // Optional: you can override methods if needed
     std::string getType() const override;
+
+    void stamp(CircuitMatrix& matrix) override;
 };
 
 #endif // OOP_PROJECT_RESISTOR_H

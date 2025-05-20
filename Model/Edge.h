@@ -9,6 +9,7 @@
 
 #include <string>
 // #include "Node.h"   // REMOVE this include from Edge.h
+#include "CircuitMatrix.h"
 
 class Node; // With this forward declaration before the class definition
 
@@ -39,6 +40,9 @@ public:
     void setNode1(Node* node1);
     void setNode2(Node* node2);
     void setValue(double value);
+
+    // Pure virtual stamp function, takes CircuitMatrix reference to modify
+    virtual void stamp(CircuitMatrix& matrix) = 0;
 };
 
 

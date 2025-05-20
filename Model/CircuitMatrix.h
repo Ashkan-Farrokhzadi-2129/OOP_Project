@@ -3,6 +3,7 @@
 
 // #include <Eigen/Dense>
 #include "LinearEquationSolver.h"
+#include "Edge.h"
 
 class CircuitMatrix {
 public:
@@ -21,7 +22,7 @@ public:
     Eigen::VectorXd E; // m x 1 (voltage sources)
 
     // Function to assemble the matrices and vectors (to be implemented)
-    void assemble();
+    void assemble(const std::vector<Edge*>& edges);
 
     // Solve system using external solver
     Eigen::VectorXd solve(LinearEquationSolver& solver);
