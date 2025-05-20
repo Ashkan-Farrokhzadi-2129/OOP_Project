@@ -18,4 +18,6 @@ add_executable(OOP_Project
         Model/Capacitor.h
         Model/Inductor.cpp
         Model/Inductor.h
+        Model/CurrentSource.cpp
+        Model/CurrentSource.h
 )
