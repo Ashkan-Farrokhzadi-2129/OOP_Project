@@ -16,4 +16,6 @@ add_executable(OOP_Project
         Model/Resistor.h
         Model/Capacitor.cpp
         Model/Capacitor.h
+        Model/Inductor.cpp
+        Model/Inductor.h
 )
