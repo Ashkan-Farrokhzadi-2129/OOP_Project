@@ -24,4 +24,6 @@ add_executable(OOP_Project
         Model/VoltageSource.h
         Model/CircuitMatrix.cpp
         Model/CircuitMatrix.h
+        Controller/LinearEquationSolver.cpp
+        Controller/LinearEquationSolver.h
 )

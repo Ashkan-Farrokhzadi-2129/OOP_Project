@@ -26,7 +26,7 @@ Eigen::VectorXd CircuitMatrix::solve() {
     Z << J,
          E;
 
-    // Solve the linear system A * x = Z
+    // Solve the linear system A * x = Z using LU decomposition method with full pivoting
     Eigen::VectorXd x = A.fullPivLu().solve(Z);
 
     // Split solution vector into node voltages (V) and currents through voltage sources (I)
