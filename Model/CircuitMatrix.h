@@ -16,7 +16,7 @@ public:
     Eigen::MatrixXd D; // m x m
 
     // Vectors
-    Eigen::VectorXd I; // n x 1
+    Eigen::VectorXd I; // m x 1
     Eigen::VectorXd V; // n x 1 (node voltages)
     Eigen::VectorXd J; // n x 1 (current injections)
     Eigen::VectorXd E; // m x 1 (voltage sources)
