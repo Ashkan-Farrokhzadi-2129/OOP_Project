@@ -12,4 +12,6 @@ add_executable(OOP_Project
         Model/Edge.h
         Model/Node.cpp
         Model/Node.h
+        Model/Resistor.cpp
+        Model/Resistor.h
 )

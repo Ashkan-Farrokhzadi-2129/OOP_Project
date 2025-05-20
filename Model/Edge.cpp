@@ -10,10 +10,6 @@ Edge::Edge(const std::string& type, const std::string& id, Node* node1, Node* no
     : type(type), id(id), node1(node1), node2(node2), value(value) {}
 
 // Getters
-std::string Edge::getType() const {
-    return type;
-}
-
 std::string Edge::getId() const {
     return id;
 }

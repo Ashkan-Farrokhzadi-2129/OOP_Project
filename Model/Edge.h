@@ -24,7 +24,7 @@ public:
     virtual ~Edge() = default;
 
     // Getters
-    std::string getType() const;
+    virtual std::string getType() const = 0;  // pure virtual
     std::string getId() const;
     Node* getNode1() const;
     Node* getNode2() const;
