@@ -23,8 +23,8 @@ public:
     // Function to assemble the matrices and vectors (to be implemented)
     void assemble();
 
-    // Function to solve the system [G B; C D] [V; I] = [J; E]
-    Eigen::VectorXd solve();
+    // Solve system using external solver
+    Eigen::VectorXd solve(LinearEquationSolver& solver);
 
 private:
     int n; // number of nodes

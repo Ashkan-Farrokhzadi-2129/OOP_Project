@@ -15,7 +15,7 @@ CircuitMatrix::CircuitMatrix(int numNodes, int numVoltageSources)
     E = Eigen::VectorXd::Zero(m);
 }
 
-Eigen::VectorXd CircuitMatrix::solve() {
+Eigen::VectorXd CircuitMatrix::solve(LinearEquationSolver& solver) {
     // Construct the MNA matrix
     Eigen::MatrixXd A(n + m, n + m);
     A << G, B,
@@ -27,7 +27,7 @@ Eigen::VectorXd CircuitMatrix::solve() {
          E;
 
     // Solve the linear system A * x = Z using LU decomposition method with full pivoting
-    Eigen::VectorXd x = A.fullPivLu().solve(Z);
+    Eigen::VectorXd x = solver.solve(A, Z);
 
     // Split solution vector into node voltages (V) and currents through voltage sources (I)
     V = x.head(n);
