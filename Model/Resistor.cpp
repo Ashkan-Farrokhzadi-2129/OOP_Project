@@ -1,5 +1,4 @@
 #include "Resistor.h"
-
 #include "Node.h"
 
 Resistor::Resistor(const std::string& id, Node* node1, Node* node2, double resistance)

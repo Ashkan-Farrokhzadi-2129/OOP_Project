@@ -9,7 +9,7 @@ CircuitMatrix::CircuitMatrix(int numNodes, int numVoltageSources)
     C = Eigen::MatrixXd::Zero(m, n);
     D = Eigen::MatrixXd::Zero(m, m);
 
-    I = Eigen::VectorXd::Zero(n);
+    I = Eigen::VectorXd::Zero(m);
     V = Eigen::VectorXd::Zero(n);
     J = Eigen::VectorXd::Zero(n);
     E = Eigen::VectorXd::Zero(m);
