@@ -1,0 +1,33 @@
+#ifndef CIRCUITMATRIX_H
+#define CIRCUITMATRIX_H
+
+#include <Eigen/Dense>
+
+class CircuitMatrix {
+public:
+    CircuitMatrix(int numNodes, int numVoltageSources);
+
+    // Matrices in MNA
+    Eigen::MatrixXd G; // n x n
+    Eigen::MatrixXd B; // n x m
+    Eigen::MatrixXd C; // m x n
+    Eigen::MatrixXd D; // m x m
+
+    // Vectors
+    Eigen::VectorXd I; // n x 1
+    Eigen::VectorXd V; // n x 1 (node voltages)
+    Eigen::VectorXd J; // n x 1 (current injections)
+    Eigen::VectorXd E; // m x 1 (voltage sources)
+
+    // Function to assemble the matrices and vectors (to be implemented)
+    void assemble();
+
+    // Function to solve the system [G B; C D] [V; I] = [J; E]
+    Eigen::VectorXd solve();
+
+private:
+    int n; // number of nodes
+    int m; // number of voltage sources
+};
+
+#endif // CIRCUITMATRIX_H

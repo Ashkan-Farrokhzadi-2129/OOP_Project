@@ -22,4 +22,6 @@ add_executable(OOP_Project
         Model/CurrentSource.h
         Model/VoltageSource.cpp
         Model/VoltageSource.h
+        Model/CircuitMatrix.cpp
+        Model/CircuitMatrix.h
 )
