@@ -2,6 +2,7 @@
 #define CIRCUITMATRIX_H
 
 #include <Eigen/Dense>
+#include "Controller/LinearEquationSolver.h"
 
 class CircuitMatrix {
 public:

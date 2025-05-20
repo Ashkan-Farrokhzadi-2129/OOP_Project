@@ -3,8 +3,12 @@ project(OOP_Project)
 
 set(CMAKE_CXX_STANDARD 23)
 
-# Add Eigen include path
-include_directories(${PROJECT_SOURCE_DIR}/external/eigen)
+# Add include paths for Eigen, Model, and Controller folders
+include_directories(
+        ${PROJECT_SOURCE_DIR}/external/eigen
+        ${PROJECT_SOURCE_DIR}/Model
+        ${PROJECT_SOURCE_DIR}/Controller
+)
 
 add_executable(OOP_Project
         main.cpp
