@@ -1,0 +1,3 @@
+F:/Documents/UniversityDocs/14032/OOP_14032/OOP_Project/build/CMakeFiles/OOP_Project.dir
+F:/Documents/UniversityDocs/14032/OOP_14032/OOP_Project/build/CMakeFiles/edit_cache.dir
+F:/Documents/UniversityDocs/14032/OOP_14032/OOP_Project/build/CMakeFiles/rebuild_cache.dir
