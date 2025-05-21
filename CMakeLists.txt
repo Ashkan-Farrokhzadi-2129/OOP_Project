@@ -30,4 +30,6 @@ add_executable(OOP_Project
         Model/CircuitMatrix.h
         Controller/LinearEquationSolver.cpp
         Controller/LinearEquationSolver.h
+        Model/CircuitBuilder.cpp
+        Model/CircuitBuilder.h
 )

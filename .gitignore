@@ -4,9 +4,13 @@
 # Ignore build directories
 cmake-build-debug/
 build/
+/external/
+/.vscode/
 
 # Ignore OS-specific files
 .DS_Store
 Thumbs.db
 
-/external/
+
+
+
