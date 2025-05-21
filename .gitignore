@@ -3,6 +3,7 @@
 
 # Ignore build directories
 cmake-build-debug/
+build/
 
 # Ignore OS-specific files
 .DS_Store
