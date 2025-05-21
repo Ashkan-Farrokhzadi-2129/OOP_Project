@@ -32,4 +32,6 @@ add_executable(OOP_Project
         Controller/LinearEquationSolver.h
         Model/CircuitBuilder.cpp
         Model/CircuitBuilder.h
+        Controller/InputError.cpp
+        Controller/InputError.h
 )
