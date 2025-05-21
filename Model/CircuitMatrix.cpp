@@ -1,4 +1,5 @@
 #include "CircuitMatrix.h"
+#include "Edge.h"
 #include <iostream>
 
 CircuitMatrix::CircuitMatrix(int numNodes, int numVoltageSources)

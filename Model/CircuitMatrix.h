@@ -2,8 +2,9 @@
 #define CIRCUITMATRIX_H
 
 // #include <Eigen/Dense>
+// #include "Edge.h"
+class Edge;
 #include "LinearEquationSolver.h"
-#include "Edge.h"
 
 class CircuitMatrix {
 public:
