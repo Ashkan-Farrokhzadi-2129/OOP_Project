@@ -34,4 +34,6 @@ add_executable(OOP_Project
         Model/CircuitBuilder.h
         Controller/InputError.cpp
         Controller/InputError.h
+        Controller/InputParser.cpp
+        Controller/InputParser.h
 )
