@@ -36,3 +36,25 @@ CircuitMatrix CircuitBuilder::buildMatrix() {
     matrix.assemble(edges);
     return matrix;
 }
+
+
+// In CircuitBuilder.cpp
+bool CircuitBuilder::resistorExists(const std::string& id) const {
+    for (const auto& edge : edges) {
+        if (edge->getType() == "Resistor" && edge->getId() == id)
+            return true;
+    }
+    return false;
+}
+
+void CircuitBuilder::deleteResistor(const std::string& id) {
+    auto it = std::remove_if(edges.begin(), edges.end(),
+        [&](Edge* edge) {
+            if (edge->getType() == "Resistor" && edge->getId() == id) {
+                delete edge;
+                return true;
+            }
+            return false;
+        });
+    edges.erase(it, edges.end());
+}

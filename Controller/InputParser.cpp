@@ -5,9 +5,6 @@
 #include <cctype>
 #include "InputError.h"
 
-InputParser::InputParser(CircuitBuilder& builder)
-    : builder(builder) {}
-
 void InputParser::parseLine(const std::string& line) {
     static const std::regex addResistorPattern(
         R"(^\s*add\s+(R\w*)\s+(\w+)\s+(\w+)\s+([-+]?\d*\.?\d+(?:[eE][-+]?\d+)?[kKmM]?)\s*$)"
@@ -22,6 +19,11 @@ void InputParser::parseLine(const std::string& line) {
         std::string node1 = match[2];
         std::string node2 = match[3];
         std::string valueStr = match[4];
+
+        // 1. Check element name starts with uppercase 'R'
+        if (id.empty() || id[0] != 'R') {
+            throw InputError("Error: Element " + id + " not found in library");
+        }
 
         // Convert value with unit
         double value = 0.0;
@@ -38,7 +40,12 @@ void InputParser::parseLine(const std::string& line) {
             throw InputError("Error: Resistance cannot be zero or negative");
         }
 
-        // You may want to check for duplicate resistor names here using CircuitBuilder
+        // 2. Check for duplicate resistor name
+        // You need to implement this method in CircuitBuilder:
+        // bool resistorExists(const std::string& id) const;
+        if (builder.resistorExists(id)) {
+            throw InputError("Error: Resistor " + id + " already exists in the circuit");
+        }
 
         // Convert node names to numbers (e.g., N001 -> 1, GND -> 0)
         int n1 = (node1 == "GND") ? 0 : std::stoi(node1.substr(1));
@@ -49,8 +56,16 @@ void InputParser::parseLine(const std::string& line) {
     }
     if (std::regex_match(line, match, deleteResistorPattern)) {
         std::string id = match[1];
+
+        // 3. Check for resistor existence before deleting
+        // You need to implement this method in CircuitBuilder:
+        // bool resistorExists(const std::string& id) const;
+        if (!builder.resistorExists(id)) {
+            throw InputError("Error: Cannot delete resistor; component not found");
+        }
+
         // Implement deletion logic in CircuitBuilder if needed
-        // builder.deleteResistor(id);
+        builder.deleteResistor(id);
         return;
     }
 
