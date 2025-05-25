@@ -12,6 +12,8 @@ public:
     int getMatrixIndex() const;
 
     void stamp(CircuitMatrix& matrix) override;
+    void updateStamps(double dt, CircuitMatrix& matrix,
+                     const Eigen::VectorXd& solution) override;
 
 private:
     int matrixIndex; // Index of this voltage source in the MNA matrix

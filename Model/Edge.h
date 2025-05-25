@@ -43,6 +43,9 @@ public:
 
     // Pure virtual stamp function, takes CircuitMatrix reference to modify
     virtual void stamp(CircuitMatrix& matrix) = 0;
+    // NEW: Pure virtual for dynamic stamping
+    virtual void updateStamps(double dt, CircuitMatrix& matrix,
+                            const Eigen::VectorXd& solution) = 0;
 };
 
 

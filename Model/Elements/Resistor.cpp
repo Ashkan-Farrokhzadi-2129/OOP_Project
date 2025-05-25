@@ -22,3 +22,9 @@ void Resistor::stamp(CircuitMatrix& matrix) {
         matrix.G(n2 - 1, n1 - 1) -= g;
     }
 }
+
+
+void Resistor::updateStamps(double dt, CircuitMatrix& matrix,
+                     const Eigen::VectorXd& solution) {
+    // Resistors have no dynamic behavior, so do nothing
+}

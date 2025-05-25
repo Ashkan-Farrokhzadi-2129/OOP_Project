@@ -58,3 +58,23 @@ void CircuitBuilder::deleteResistor(const std::string& id) {
         });
     edges.erase(it, edges.end());
 }
+
+void CircuitBuilder::setGroundNode(int nodeNumber) {
+    groundNode = nodeNumber;
+}
+
+void CircuitBuilder::addCapacitor(const std::string& id, int n1, int n2, double capacitance) {
+    Node* node1 = getOrCreateNode(n1);
+    Node* node2 = getOrCreateNode(n2);
+    edges.push_back(new Capacitor(id, node1, node2, capacitance));
+}
+
+void CircuitBuilder::addInductor(const std::string& id, int n1, int n2, double inductance) {
+    Node* node1 = getOrCreateNode(n1);
+    Node* node2 = getOrCreateNode(n2);
+    edges.push_back(new Inductor(id, node1, node2, inductance));
+}
+
+const std::vector<Edge*>& CircuitBuilder::getEdges() const {
+    return edges;
+}

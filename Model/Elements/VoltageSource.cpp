@@ -31,3 +31,8 @@ void VoltageSource::stamp(CircuitMatrix& matrix) {
 int VoltageSource::getMatrixIndex() const {
     return matrixIndex;
 }
+
+void VoltageSource::updateStamps(double dt, CircuitMatrix& matrix,
+                     const Eigen::VectorXd& solution) {
+    //Empty
+}

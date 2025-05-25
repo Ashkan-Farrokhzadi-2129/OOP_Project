@@ -12,7 +12,7 @@ public:
     void stamp(CircuitMatrix& matrix) override;
 
     // For time-domain analysis
-    void updateStamps(double dt, CircuitMatrix& matrix, const Eigen::VectorXd& currents);
+    void updateStamps(double dt, CircuitMatrix& matrix, const Eigen::VectorXd& currents) override;
 
 private:
     double prevCurrent = 0.0;

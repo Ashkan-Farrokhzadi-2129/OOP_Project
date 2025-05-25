@@ -11,6 +11,8 @@ public:
     std::string getType() const override;
 
     void stamp(CircuitMatrix& matrix) override;
+    void updateStamps(double dt, CircuitMatrix& matrix,
+                     const Eigen::VectorXd& solution) override;
 };
 
 #endif // OOP_PROJECT_RESISTOR_H

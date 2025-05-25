@@ -20,3 +20,8 @@ void CurrentSource::stamp(CircuitMatrix& matrix) {
     if (n2 != 0)
         matrix.J(n2 - 1) += curr;
 }
+
+void CurrentSource::updateStamps(double dt, CircuitMatrix& matrix,
+                     const Eigen::VectorXd& solution) {
+    //Empty
+}

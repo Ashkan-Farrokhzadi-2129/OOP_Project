@@ -63,3 +63,12 @@ void CircuitMatrix::updateDynamicComponents(double dt, const Eigen::VectorXd& so
     }
 }
 
+void CircuitMatrix::resetDynamicComponents() {
+    G.setZero();
+    B.setZero();
+    C.setZero();
+    D.setZero();
+    I.setZero();
+    J.setZero();
+    E.setZero();
+}
