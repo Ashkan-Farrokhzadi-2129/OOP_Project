@@ -31,6 +31,8 @@ public:
     const int getN() const;
     const int getM() const;
 
+    void resetDynamicComponents();
+    void updateDynamicComponents(double dt, const Eigen::VectorXd& solution, const std::vector<Edge*>& edges);
 private:
     int n; // number of nodes
     int m; // number of voltage sources

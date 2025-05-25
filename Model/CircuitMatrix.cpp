@@ -1,6 +1,8 @@
 #include "CircuitMatrix.h"
 #include "Edge.h"
 #include <iostream>
+#include "Capacitor.h"
+#include "Inductor.h"
 
 CircuitMatrix::CircuitMatrix(int numNodes, int numVoltageSources)
     : n(numNodes), m(numVoltageSources) {
@@ -48,5 +50,16 @@ const int CircuitMatrix::getN() const {
 }
 const int CircuitMatrix::getM() const {
     return m;
+}
+
+void CircuitMatrix::updateDynamicComponents(double dt, const Eigen::VectorXd& solution, const std::vector<Edge*>& edges) {
+    for (auto edge : edges) {
+        if (edge->getType() == "Capacitor") {
+            dynamic_cast<Capacitor*>(edge)->updateStamps(dt, *this, solution.head(n));
+        }
+        else if (edge->getType() == "Inductor") {
+            dynamic_cast<Inductor*>(edge)->updateStamps(dt, *this, solution.tail(m));
+        }
+    }
 }
 
