@@ -28,6 +28,9 @@ public:
     // Solve system using external solver
     Eigen::VectorXd solve(LinearEquationSolver& solver);
 
+    const int getN() const;
+    const int getM() const;
+
 private:
     int n; // number of nodes
     int m; // number of voltage sources

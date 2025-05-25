@@ -43,3 +43,10 @@ void CircuitMatrix::assemble(const std::vector<Edge*>& edges) {
     }
 }
 
+const int CircuitMatrix::getN() const {
+    return n;
+}
+const int CircuitMatrix::getM() const {
+    return m;
+}
+
