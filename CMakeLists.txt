@@ -39,4 +39,6 @@ add_executable(OOP_Project
         View/InputError.h
         Controller/InputParser.cpp
         Controller/InputParser.h
+        Model/Solvers/TimeSolver.cpp
+        Model/Solvers/TimeSolver.h
 )
