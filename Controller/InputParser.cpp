@@ -211,5 +211,41 @@ void InputParser::parseLine(const std::string& line) {
         return;
     }
 
+    static const std::regex addGroundPattern(
+        R"(^\s*add\s+GND\s+(\w+)\s*$)"
+    );
+    static const std::regex deleteGroundPattern(
+        R"(^\s*delete\s+GND\s+(\w+)\s*$)"
+    );
+
+    // Add Ground
+    if (std::regex_match(line, match, addGroundPattern)) {
+        std::string nodeName = match[1];
+
+        // Check element name is exactly "GND"
+        if (line.substr(4, 3) != "GND") {
+            throw InputError("Error: Element GND not found in library");
+        }
+
+        // Create node if it doesn't exist
+        if (!builder.nodeExists(nodeName)) {
+            builder.createNode(nodeName); // You need to implement this if not present
+        }
+        builder.setGroundNode(nodeName); // You need to implement this
+        return;
+    }
+
+    // Delete Ground
+    if (std::regex_match(line, match, deleteGroundPattern)) {
+        std::string nodeName = match[1];
+
+        if (!builder.nodeExists(nodeName)) {
+            std::cout << "Node does not exist" << std::endl;
+            return;
+        }
+        builder.deleteGroundNode(nodeName); // You need to implement this
+        return;
+    }
+
     throw InputError("Error: Syntax error");
 }

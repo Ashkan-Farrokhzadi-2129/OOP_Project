@@ -41,11 +41,18 @@ public:
     bool inductorExists(const std::string& id) const;
     void deleteInductor(const std::string& id);
 
+    bool nodeExists(const std::string& nodeName) const;
+    void createNode(const std::string& nodeName);
+    void setGroundNode(const std::string& nodeName);
+    void deleteGroundNode(const std::string& nodeName);
+
 private:
+    std::unordered_map<std::string, int> nodeNameToNumber; // NEW: maps node name to number
     std::unordered_map<int, Node*> nodes;
     std::vector<Edge*> edges;
     int voltageSourceCount;
     int groundNode = 0; // Default to node 0 as ground
+    int nextNodeNumber = 1; // NEW: for assigning unique numbers
 };
 
 #endif //CIRCUITBUILDER_H

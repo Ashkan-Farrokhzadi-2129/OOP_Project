@@ -119,3 +119,28 @@ void CircuitBuilder::deleteInductor(const std::string& id) {
         });
     edges.erase(it, edges.end());
 }
+
+
+bool CircuitBuilder::nodeExists(const std::string& nodeName) const {
+    return nodeNameToNumber.find(nodeName) != nodeNameToNumber.end();
+}
+
+void CircuitBuilder::createNode(const std::string& nodeName) {
+    if (!nodeExists(nodeName)) {
+        int nodeNumber = nextNodeNumber++;
+        nodeNameToNumber[nodeName] = nodeNumber;
+        nodes[nodeNumber] = new Node(nodeNumber);
+    }
+}
+
+void CircuitBuilder::setGroundNode(const std::string& nodeName) {
+    if (nodeExists(nodeName)) {
+        groundNode = nodeNameToNumber[nodeName];
+    }
+}
+
+void CircuitBuilder::deleteGroundNode(const std::string& nodeName) {
+    if (nodeExists(nodeName) && groundNode == nodeNameToNumber[nodeName]) {
+        groundNode = 0; // Reset to default ground
+    }
+}
