@@ -46,6 +46,9 @@ public:
     void setGroundNode(const std::string& nodeName);
     void deleteGroundNode(const std::string& nodeName);
 
+    std::vector<std::string> getAllNodeNames() const;
+    std::vector<std::string> getComponentList(const std::string& type = "") const;
+
 private:
     std::unordered_map<std::string, int> nodeNameToNumber; // NEW: maps node name to number
     std::unordered_map<int, Node*> nodes;

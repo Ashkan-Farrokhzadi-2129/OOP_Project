@@ -40,3 +40,10 @@ void Capacitor::updateStamps(double dt, CircuitMatrix& matrix, const Eigen::Vect
     prevCurrent = G_eq * currentVoltage + I_eq;
     prevVoltage = currentVoltage;
 }
+
+std::string Capacitor::getInfoString() const {
+    return id + " " +
+           std::to_string(node1->getNumber()) + " " +
+           std::to_string(node2->getNumber()) + " " +
+           std::to_string(value);
+}

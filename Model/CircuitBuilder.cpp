@@ -144,3 +144,21 @@ void CircuitBuilder::deleteGroundNode(const std::string& nodeName) {
         groundNode = 0; // Reset to default ground
     }
 }
+
+std::vector<std::string> CircuitBuilder::getAllNodeNames() const {
+    std::vector<std::string> names;
+    for (const auto& pair : nodeNameToNumber) {
+        names.push_back(pair.first);
+    }
+    return names;
+}
+
+std::vector<std::string> CircuitBuilder::getComponentList(const std::string& type) const {
+    std::vector<std::string> result;
+    for (const auto& edge : edges) {
+        if (type.empty() || edge->getType() == type) {
+            result.push_back(edge->getInfoString()); // Implement getInfoString() in Edge and derived classes
+        }
+    }
+    return result;
+}

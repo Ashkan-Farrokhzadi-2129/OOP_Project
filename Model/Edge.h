@@ -46,6 +46,8 @@ public:
     // NEW: Pure virtual for dynamic stamping
     virtual void updateStamps(double dt, CircuitMatrix& matrix,
                             const Eigen::VectorXd& solution) = 0;
+
+    virtual std::string getInfoString() const = 0;
 };
 
 

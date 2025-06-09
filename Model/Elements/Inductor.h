@@ -14,6 +14,8 @@ public:
     // For time-domain analysis
     void updateStamps(double dt, CircuitMatrix& matrix, const Eigen::VectorXd& currents) override;
 
+    std::string getInfoString() const override;
+
 private:
     double prevCurrent = 0.0;
     double prevVoltage = 0.0;

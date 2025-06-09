@@ -247,5 +247,32 @@ void InputParser::parseLine(const std::string& line) {
         return;
     }
 
+    static const std::regex showNodesPattern(R"(^\s*\.nodes\s*$)");
+    static const std::regex listPattern(R"(^\s*\.list\s*(\w*)\s*$)");
+
+    // Show all nodes
+    if (std::regex_match(line, match, showNodesPattern)) {
+        std::cout << "Available nodes:\n";
+        auto nodeNames = builder.getAllNodeNames(); // You need to implement this
+        bool first = true;
+        for (const auto& name : nodeNames) {
+            if (!first) std::cout << ", ";
+            std::cout << name;
+            first = false;
+        }
+        std::cout << std::endl;
+        return;
+    }
+
+    // List all components or by type
+    if (std::regex_match(line, match, listPattern)) {
+        std::string type = match[1];
+        auto components = builder.getComponentList(type); // You need to implement this
+        for (const auto& comp : components) {
+            std::cout << comp << std::endl;
+        }
+        return;
+    }
+
     throw InputError("Error: Syntax error");
 }

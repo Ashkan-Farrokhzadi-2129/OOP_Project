@@ -28,3 +28,10 @@ void Resistor::updateStamps(double dt, CircuitMatrix& matrix,
                      const Eigen::VectorXd& solution) {
     // Resistors have no dynamic behavior, so do nothing
 }
+
+std::string Resistor::getInfoString() const {
+    return id + " " +
+           std::to_string(node1->getNumber()) + " " +
+           std::to_string(node2->getNumber()) + " " +
+           std::to_string(value);
+}

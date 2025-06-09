@@ -25,3 +25,11 @@ void CurrentSource::updateStamps(double dt, CircuitMatrix& matrix,
                      const Eigen::VectorXd& solution) {
     //Empty
 }
+
+
+std::string CurrentSource::getInfoString() const {
+    return id + " " +
+           std::to_string(node1->getNumber()) + " " +
+           std::to_string(node2->getNumber()) + " " +
+           std::to_string(value);
+}

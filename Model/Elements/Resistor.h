@@ -13,6 +13,8 @@ public:
     void stamp(CircuitMatrix& matrix) override;
     void updateStamps(double dt, CircuitMatrix& matrix,
                      const Eigen::VectorXd& solution) override;
+
+    std::string getInfoString() const override;
 };
 
 #endif // OOP_PROJECT_RESISTOR_H

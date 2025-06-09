@@ -52,3 +52,10 @@ void Inductor::updateStamps(double dt, CircuitMatrix& matrix, const Eigen::Vecto
     prevVoltage = (n1 >= 0 ? currents(n1) : 0) - (n2 >= 0 ? currents(n2) : 0);
     prevCurrent = (V_eq - prevVoltage) / R_eq;
 }
+
+std::string Inductor::getInfoString() const {
+    return id + " " +
+           std::to_string(node1->getNumber()) + " " +
+           std::to_string(node2->getNumber()) + " " +
+           std::to_string(value);
+}
