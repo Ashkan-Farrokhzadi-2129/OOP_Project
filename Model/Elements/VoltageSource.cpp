@@ -44,3 +44,13 @@ std::string VoltageSource::getInfoString() const {
            std::to_string(node2->getNumber()) + " " +
            std::to_string(value);
 }
+
+double VoltageSource::getCurrent(const Eigen::VectorXd& state) const {
+    // The current through the voltage source is stored at its matrix index in the solution vector
+    int idx = getMatrixIndex();
+    if (idx >= 0 && idx < state.size()) {
+        return state(idx);
+    } else {
+        return 0.0;
+    }
+}

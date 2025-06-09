@@ -50,6 +50,7 @@ public:
     std::vector<std::string> getComponentList(const std::string& type = "") const;
 
     void runTransientAnalysis(double tStep, double tStop);
+    void runTransientPrint(double tStep, double tStop, const std::vector<std::string>& variables);
 
 private:
     std::unordered_map<std::string, int> nodeNameToNumber; // NEW: maps node name to number

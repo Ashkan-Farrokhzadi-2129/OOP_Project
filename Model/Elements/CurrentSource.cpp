@@ -33,3 +33,8 @@ std::string CurrentSource::getInfoString() const {
            std::to_string(node2->getNumber()) + " " +
            std::to_string(value);
 }
+
+double CurrentSource::getCurrent(const Eigen::VectorXd& state) const {
+    // For an ideal current source, the current is its value
+    return value;
+}

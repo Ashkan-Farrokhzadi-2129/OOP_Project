@@ -15,10 +15,12 @@ public:
     void updateStamps(double dt, CircuitMatrix& matrix, const Eigen::VectorXd& voltages) override;
 
     std::string getInfoString() const override;
+    double getCurrent(const Eigen::VectorXd& state) const override;
 
 private:
     double prevCurrent = 0.0;
     double prevVoltage = 0.0;
+    mutable double lastDt = 1.0; // or 0.0, will be set in updateStamps
 };
 
 #endif // CAPACITOR_H

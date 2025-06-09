@@ -291,5 +291,27 @@ void InputParser::parseLine(const std::string& line) {
     return;
     }
 
+    static const std::regex printTranPattern(
+    R"(^\s*\.print\s+TRAN\s+([\d\.eE+-]+)\s+([\d\.eE+-]+)(?:\s+[\d\.eE+-]+)?(?:\s+[\d\.eE+-]+)?((?:\s+[VI]\([^)]+\))+)\s*$)"
+    );
+
+    if (std::regex_match(line, match, printTranPattern)) {
+    double tStep = std::stod(match[1]);
+    double tStop = std::stod(match[2]);
+    std::string varsStr = match[3];
+
+    // Extract variables (e.g., V(n001), I(R1), ...)
+    std::vector<std::string> variables;
+    std::regex varRegex(R"(([VI]\([^)]+\)))");
+    auto varsBegin = std::sregex_iterator(varsStr.begin(), varsStr.end(), varRegex);
+    auto varsEnd = std::sregex_iterator();
+    for (auto it = varsBegin; it != varsEnd; ++it) {
+        variables.push_back(it->str());
+    }
+
+    builder.runTransientPrint(tStep, tStop, variables);
+    return;
+}
+
     throw InputError("Error: Syntax error");
 }

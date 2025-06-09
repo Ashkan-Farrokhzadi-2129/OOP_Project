@@ -15,10 +15,11 @@ public:
     void updateStamps(double dt, CircuitMatrix& matrix, const Eigen::VectorXd& currents) override;
 
     std::string getInfoString() const override;
-
+    double getCurrent(const Eigen::VectorXd& state) const override;
 private:
     double prevCurrent = 0.0;
     double prevVoltage = 0.0;
+    mutable int lastCurrentIndex = -1;
 };
 
 #endif // INDUCTOR_H

@@ -48,6 +48,7 @@ public:
                             const Eigen::VectorXd& solution) = 0;
 
     virtual std::string getInfoString() const = 0;
+    virtual double getCurrent(const Eigen::VectorXd& state) const = 0;
 };
 
 

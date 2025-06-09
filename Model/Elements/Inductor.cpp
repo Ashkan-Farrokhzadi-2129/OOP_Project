@@ -31,6 +31,7 @@ void Inductor::updateStamps(double dt, CircuitMatrix& matrix, const Eigen::Vecto
     int n1 = node1->getNumber() - 1;
     int n2 = node2->getNumber() - 1;
     int vsIndex = matrix.getM(); // Assuming we add new voltage sources at the end
+    lastCurrentIndex = vsIndex;
 
     // Companion model: R_eq = 2L/dt, V_eq = (2L/dt)*I_prev + V_prev
     double R_eq = (2.0 * value) / dt;
@@ -58,4 +59,13 @@ std::string Inductor::getInfoString() const {
            std::to_string(node1->getNumber()) + " " +
            std::to_string(node2->getNumber()) + " " +
            std::to_string(value);
+}
+
+double Inductor::getCurrent(const Eigen::VectorXd& state) const {
+    // Use the stored index from the last stamping
+    if (lastCurrentIndex >= 0 && lastCurrentIndex < state.size()) {
+        return state(lastCurrentIndex);
+    } else {
+        return 0.0; // Or throw an error if you prefer
+    }
 }

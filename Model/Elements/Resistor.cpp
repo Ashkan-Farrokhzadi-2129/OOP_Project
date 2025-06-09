@@ -35,3 +35,11 @@ std::string Resistor::getInfoString() const {
            std::to_string(node2->getNumber()) + " " +
            std::to_string(value);
 }
+
+
+
+double Resistor::getCurrent(const Eigen::VectorXd& state) const {
+    int n1 = node1->getNumber();
+    int n2 = node2->getNumber();
+    return (state(n1) - state(n2)) / value;
+}

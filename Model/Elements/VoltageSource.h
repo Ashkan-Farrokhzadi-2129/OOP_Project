@@ -16,6 +16,7 @@ public:
                      const Eigen::VectorXd& solution) override;
 
     std::string getInfoString() const override;
+    double getCurrent(const Eigen::VectorXd& state) const override;
 
 private:
     int matrixIndex; // Index of this voltage source in the MNA matrix

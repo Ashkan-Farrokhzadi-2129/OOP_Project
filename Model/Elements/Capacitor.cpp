@@ -16,6 +16,9 @@ void Capacitor::stamp(CircuitMatrix& matrix) {
 
 
 void Capacitor::updateStamps(double dt, CircuitMatrix& matrix, const Eigen::VectorXd& voltages) {
+    lastDt = dt; // <--- Add this line
+    // ...existing code...
+
     int n1 = node1->getNumber() - 1; // assuming nodes are 1-based
     int n2 = node2->getNumber() - 1;
 
@@ -46,4 +49,20 @@ std::string Capacitor::getInfoString() const {
            std::to_string(node1->getNumber()) + " " +
            std::to_string(node2->getNumber()) + " " +
            std::to_string(value);
+}
+
+double Capacitor::getCurrent(const Eigen::VectorXd& state) const {
+    int n1 = node1->getNumber() - 1;
+    int n2 = node2->getNumber() - 1;
+
+    double v1 = (n1 >= 0) ? state(n1) : 0.0;
+    double v2 = (n2 >= 0) ? state(n2) : 0.0;
+    double vC = v1 - v2;
+
+    // Use the backward Euler formula for capacitor current
+    if (lastDt > 0.0) {
+        return value * (vC - prevVoltage) / lastDt;
+    } else {
+        return 0.0;
+    }
 }

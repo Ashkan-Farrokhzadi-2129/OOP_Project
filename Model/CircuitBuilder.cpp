@@ -187,3 +187,47 @@ void CircuitBuilder::runTransientAnalysis(double tStep, double tStop) {
         std::cout << std::endl;
     }
 }
+
+void CircuitBuilder::runTransientPrint(double tStep, double tStop, const std::vector<std::string>& variables) {
+    LinearEquationSolver solver;
+    CircuitMatrix matrix(static_cast<int>(nodes.size()), voltageSourceCount);
+    matrix.assemble(edges);
+    Eigen::VectorXd state = Eigen::VectorXd::Zero(nodes.size() + voltageSourceCount);
+
+    // Print header
+    std::cout << "t";
+    for (const auto& var : variables) std::cout << "\t" << var;
+    std::cout << std::endl;
+
+    for (double t = 0; t <= tStop; t += tStep) {
+        matrix.updateDynamicComponents(tStep, state, edges);
+        state = matrix.solve(solver);
+
+        std::cout << t;
+        for (const auto& var : variables) {
+            if (var[0] == 'V') {
+                // Voltage: V(node)
+                std::string nodeName = var.substr(2, var.size() - 3);
+                int nodeNum = nodeNameToNumber.count(nodeName) ? nodeNameToNumber.at(nodeName) : -1;
+                if (nodeNum >= 0 && nodeNum < state.size())
+                    std::cout << "\t" << state(nodeNum);
+                else
+                    std::cout << "\tNaN";
+            } else if (var[0] == 'I') {
+                // Current: I(element)
+                std::string elemId = var.substr(2, var.size() - 3);
+                double current = 0.0;
+                bool found = false;
+                for (const auto& edge : edges) {
+                    if (edge->getId() == elemId) {
+                        current = edge->getCurrent(state);
+                        found = true;
+                        break;
+                    }
+                }
+                std::cout << "\t" << (found ? current : NAN);
+            }
+        }
+        std::cout << std::endl;
+    }
+}

@@ -15,6 +15,7 @@ public:
                      const Eigen::VectorXd& solution) override;
 
     std::string getInfoString() const override;
+    double getCurrent(const Eigen::VectorXd& state) const override;
 };
 
 #endif // OOP_PROJECT_RESISTOR_H
