@@ -5,6 +5,8 @@
 #include <cctype>
 #include "InputError.h"
 
+InputParser::InputParser(CircuitBuilder& builder) : builder(builder) {}
+
 void InputParser::parseLine(const std::string& line) {
     static const std::regex addResistorPattern(
         R"(^\s*add\s+(R\w*)\s+(\w+)\s+(\w+)\s+([-+]?\d*\.?\d+(?:[eE][-+]?\d+)?[kKmM]?)\s*$)"
