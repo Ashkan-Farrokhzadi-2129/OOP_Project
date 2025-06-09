@@ -69,5 +69,76 @@ void InputParser::parseLine(const std::string& line) {
         return;
     }
 
+    static const std::regex addCapacitorPattern(
+        R"(^\s*add\s+(C\w*)\s+(\w+)\s+(\w+)\s+([-+]?\d*\.?\d+(?:[eE][-+]?\d+)?[uUnNμfF]*)\s*$)"
+    );
+    static const std::regex deleteCapacitorPattern(
+        R"(^\s*delete\s+(C\w*)\s*$)"
+    );
+
+    // Add Capacitor
+    if (std::regex_match(line, match, addCapacitorPattern)) {
+        std::string id = match[1];
+        std::string node1 = match[2];
+        std::string node2 = match[3];
+        std::string valueStr = match[4];
+
+        // 1. Check element name starts with uppercase 'C'
+        if (id.empty() || id[0] != 'C') {
+            throw InputError("Error: Element " + id + " not found in library");
+        }
+
+        // Parse value and unit
+        double value = 0.0;
+        std::string numPart, unitPart;
+        size_t i = 0;
+        while (i < valueStr.size() && (std::isdigit(valueStr[i]) || valueStr[i] == '.' || valueStr[i] == '-' || valueStr[i] == '+' || valueStr[i] == 'e' || valueStr[i] == 'E')) {
+            numPart += valueStr[i++];
+        }
+        unitPart = valueStr.substr(i);
+
+        try {
+            value = std::stod(numPart);
+        } catch (...) {
+            throw InputError("Error: Syntax error");
+        }
+
+        // Unit conversion
+        if (unitPart == "u" || unitPart == "U" || unitPart == "μ" || unitPart == "uf" || unitPart == "uF" || unitPart == "μF" || unitPart == "Uf" || unitPart == "UF")
+            value *= 1e-6;
+        else if (unitPart == "n" || unitPart == "N" || unitPart == "nf" || unitPart == "nF" || unitPart == "Nf" || unitPart == "NF")
+            value *= 1e-9;
+        else if (unitPart == "f" || unitPart == "F" || unitPart == "") // Farad or no unit
+            value *= 1.0;
+
+        if (value <= 0) {
+            throw InputError("Error: Capacitance cannot be zero or negative");
+        }
+
+        // 2. Check for duplicate capacitor name
+        if (builder.capacitorExists(id)) {
+            throw InputError("Error: Capacitor " + id + " already exists in the circuit");
+        }
+
+        // Convert node names to numbers (e.g., N001 -> 1, GND -> 0)
+        int n1 = (node1 == "GND") ? 0 : std::stoi(node1.substr(1));
+        int n2 = (node2 == "GND") ? 0 : std::stoi(node2.substr(1));
+
+        builder.addCapacitor(id, n1, n2, value);
+        return;
+    }
+
+    // Delete Capacitor
+    if (std::regex_match(line, match, deleteCapacitorPattern)) {
+        std::string id = match[1];
+
+        if (!builder.capacitorExists(id)) {
+            throw InputError("Error: Cannot delete capacitor; component not found");
+        }
+
+        builder.deleteCapacitor(id);
+        return;
+    }
+
     throw InputError("Error: Syntax error");
 }

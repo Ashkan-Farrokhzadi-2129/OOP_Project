@@ -78,3 +78,24 @@ void CircuitBuilder::addInductor(const std::string& id, int n1, int n2, double i
 const std::vector<Edge*>& CircuitBuilder::getEdges() const {
     return edges;
 }
+
+
+bool CircuitBuilder::capacitorExists(const std::string& id) const {
+    for (const auto& edge : edges) {
+        if (edge->getType() == "Capacitor" && edge->getId() == id)
+            return true;
+    }
+    return false;
+}
+
+void CircuitBuilder::deleteCapacitor(const std::string& id) {
+    auto it = std::remove_if(edges.begin(), edges.end(),
+        [&](Edge* edge) {
+            if (edge->getType() == "Capacitor" && edge->getId() == id) {
+                delete edge;
+                return true;
+            }
+            return false;
+        });
+    edges.erase(it, edges.end());
+}

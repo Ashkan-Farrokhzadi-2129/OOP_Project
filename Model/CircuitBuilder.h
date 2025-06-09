@@ -35,6 +35,9 @@ public:
     bool resistorExists(const std::string& id) const;
     void deleteResistor(const std::string& id);
 
+    bool capacitorExists(const std::string& id) const;
+    void deleteCapacitor(const std::string& id);
+
 private:
     std::unordered_map<int, Node*> nodes;
     std::vector<Edge*> edges;
