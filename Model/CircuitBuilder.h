@@ -29,6 +29,7 @@ public:
     CircuitMatrix buildMatrix();
 
     const std::vector<Edge*>& getEdges() const;
+    bool componentExists(const std::string& id) const;
     int getVoltageSourceCount() const;
 
     // In CircuitBuilder.h

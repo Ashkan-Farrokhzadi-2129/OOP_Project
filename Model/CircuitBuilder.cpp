@@ -231,3 +231,12 @@ void CircuitBuilder::runTransientPrint(double tStep, double tStop, const std::ve
         std::cout << std::endl;
     }
 }
+
+bool CircuitBuilder::componentExists(const std::string& id) const {
+    for (const auto& edge : edges) {
+        if (edge->getId() == id) {
+            return true;
+        }
+    }
+    return false;
+}

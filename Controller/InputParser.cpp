@@ -309,6 +309,23 @@ void InputParser::parseLine(const std::string& line) {
         variables.push_back(it->str());
     }
 
+        // Error handling for missing nodes/components
+    for (const auto& var : variables) {
+        if (var[0] == 'V') {
+            // Voltage: V(node)
+            std::string nodeName = var.substr(2, var.size() - 3);
+            if (!builder.nodeExists(nodeName)) {
+                throw InputError("Node " + nodeName + " not found in circuit");
+            }
+        } else if (var[0] == 'I') {
+            // Current: I(component)
+            std::string compName = var.substr(2, var.size() - 3);
+            if (!builder.componentExists(compName)) {
+                throw InputError("Component " + compName + " not found in circuit");
+            }
+        }
+    }
+
     builder.runTransientPrint(tStep, tStop, variables);
     return;
 }
