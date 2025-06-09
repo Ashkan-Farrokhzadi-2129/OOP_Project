@@ -49,6 +49,8 @@ public:
     std::vector<std::string> getAllNodeNames() const;
     std::vector<std::string> getComponentList(const std::string& type = "") const;
 
+    void runTransientAnalysis(double tStep, double tStop);
+
 private:
     std::unordered_map<std::string, int> nodeNameToNumber; // NEW: maps node name to number
     std::unordered_map<int, Node*> nodes;

@@ -1,4 +1,6 @@
 #include "CircuitBuilder.h"
+#include "TimeSolver.h"
+#include <iostream>
 
 CircuitBuilder::CircuitBuilder() : voltageSourceCount(0) {}
 
@@ -161,4 +163,27 @@ std::vector<std::string> CircuitBuilder::getComponentList(const std::string& typ
         }
     }
     return result;
+}
+
+void CircuitBuilder::runTransientAnalysis(double tStep, double tStop) {
+    LinearEquationSolver solver;
+    CircuitMatrix matrix(static_cast<int>(nodes.size()), voltageSourceCount);
+
+    matrix.assemble(edges);
+
+    Eigen::VectorXd state = Eigen::VectorXd::Zero(nodes.size() + voltageSourceCount);
+
+    for (double t = 0; t <= tStop; t += tStep) {
+        // Update dynamic components (capacitors, inductors, etc.)
+        matrix.updateDynamicComponents(tStep, state, edges);
+
+        // Solve for the next state
+        state = matrix.solve(solver);
+
+        // Output voltages/currents as needed
+        std::cout << "t=" << t << ": ";
+        for (int i = 0; i < nodes.size(); ++i)
+            std::cout << "V(" << i+1 << ")=" << state(i) << " ";
+        std::cout << std::endl;
+    }
 }

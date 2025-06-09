@@ -274,5 +274,22 @@ void InputParser::parseLine(const std::string& line) {
         return;
     }
 
+    static const std::regex tranPattern(
+    R"(^\s*\.TRAN\s+([\d\.eE+-]+)\s+([\d\.eE+-]+)\s*$)"
+    );
+
+    if (std::regex_match(line, match, tranPattern)) {
+    double tStep = std::stod(match[1]);
+    double tStop = std::stod(match[2]);
+
+    if (tStep <= 0 || tStop <= 0) {
+        throw InputError("Error: Invalid .TRAN parameters");
+    }
+
+    // Call your transient analysis function (implement this in your controller/model)
+    builder.runTransientAnalysis(tStep, tStop);
+    return;
+    }
+
     throw InputError("Error: Syntax error");
 }
