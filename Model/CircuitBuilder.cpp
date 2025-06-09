@@ -99,3 +99,23 @@ void CircuitBuilder::deleteCapacitor(const std::string& id) {
         });
     edges.erase(it, edges.end());
 }
+
+bool CircuitBuilder::inductorExists(const std::string& id) const {
+    for (const auto& edge : edges) {
+        if (edge->getType() == "Inductor" && edge->getId() == id)
+            return true;
+    }
+    return false;
+}
+
+void CircuitBuilder::deleteInductor(const std::string& id) {
+    auto it = std::remove_if(edges.begin(), edges.end(),
+        [&](Edge* edge) {
+            if (edge->getType() == "Inductor" && edge->getId() == id) {
+                delete edge;
+                return true;
+            }
+            return false;
+        });
+    edges.erase(it, edges.end());
+}

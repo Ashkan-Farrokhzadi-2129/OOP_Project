@@ -140,5 +140,76 @@ void InputParser::parseLine(const std::string& line) {
         return;
     }
 
+    static const std::regex addInductorPattern(
+        R"(^\s*add\s+(L\w*)\s+(\w+)\s+(\w+)\s+([-+]?\d*\.?\d+(?:[eE][-+]?\d+)?[mMuUμhH]*)\s*$)"
+    );
+    static const std::regex deleteInductorPattern(
+        R"(^\s*delete\s+(L\w*)\s*$)"
+    );
+
+    // Add Inductor
+    if (std::regex_match(line, match, addInductorPattern)) {
+        std::string id = match[1];
+        std::string node1 = match[2];
+        std::string node2 = match[3];
+        std::string valueStr = match[4];
+
+        // 1. Check element name starts with uppercase 'L'
+        if (id.empty() || id[0] != 'L') {
+            throw InputError("Error: Element " + id + " not found in library");
+        }
+
+        // Parse value and unit
+        double value = 0.0;
+        std::string numPart, unitPart;
+        size_t i = 0;
+        while (i < valueStr.size() && (std::isdigit(valueStr[i]) || valueStr[i] == '.' || valueStr[i] == '-' || valueStr[i] == '+' || valueStr[i] == 'e' || valueStr[i] == 'E')) {
+            numPart += valueStr[i++];
+        }
+        unitPart = valueStr.substr(i);
+
+        try {
+            value = std::stod(numPart);
+        } catch (...) {
+            throw InputError("Error: Syntax error");
+        }
+
+        // Unit conversion
+        if (unitPart == "m" || unitPart == "M" || unitPart == "mh" || unitPart == "mH" || unitPart == "Mh" || unitPart == "MH")
+            value *= 1e-3;
+        else if (unitPart == "u" || unitPart == "U" || unitPart == "μ" || unitPart == "uh" || unitPart == "uH" || unitPart == "μH" || unitPart == "Uh" || unitPart == "UH")
+            value *= 1e-6;
+        else if (unitPart == "h" || unitPart == "H" || unitPart == "") // Henry or no unit
+            value *= 1.0;
+
+        if (value <= 0) {
+            throw InputError("Error: Inductance cannot be zero or negative");
+        }
+
+        // 2. Check for duplicate inductor name
+        if (builder.inductorExists(id)) {
+            throw InputError("Error: inductor " + id + " already exists in the circuit");
+        }
+
+        // Convert node names to numbers (e.g., N001 -> 1, GND -> 0)
+        int n1 = (node1 == "GND") ? 0 : std::stoi(node1.substr(1));
+        int n2 = (node2 == "GND") ? 0 : std::stoi(node2.substr(1));
+
+        builder.addInductor(id, n1, n2, value);
+        return;
+    }
+
+    // Delete Inductor
+    if (std::regex_match(line, match, deleteInductorPattern)) {
+        std::string id = match[1];
+
+        if (!builder.inductorExists(id)) {
+            throw InputError("Error: Cannot delete inductor; component not found");
+        }
+
+        builder.deleteInductor(id);
+        return;
+    }
+
     throw InputError("Error: Syntax error");
 }

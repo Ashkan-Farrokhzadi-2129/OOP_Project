@@ -38,6 +38,9 @@ public:
     bool capacitorExists(const std::string& id) const;
     void deleteCapacitor(const std::string& id);
 
+    bool inductorExists(const std::string& id) const;
+    void deleteInductor(const std::string& id);
+
 private:
     std::unordered_map<int, Node*> nodes;
     std::vector<Edge*> edges;
