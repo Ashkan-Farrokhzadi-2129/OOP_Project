@@ -204,6 +204,13 @@ void CircuitBuilder::runTransientPrint(double tStep, double tStop, const std::ve
         matrix.updateDynamicComponents(tStep, state, edges);
         state = matrix.solve(solver);
 
+        // Update capacitor histories after solving
+        for (auto* edge : edges) {
+            if (auto* cap = dynamic_cast<Capacitor*>(edge)) {
+                cap->updateHistory(state.head(nodes.size()));
+            }
+        }
+
         std::cout << t;
         for (const auto& var : variables) {
             if (var[0] == 'V') {

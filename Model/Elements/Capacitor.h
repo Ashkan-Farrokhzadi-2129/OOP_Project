@@ -17,6 +17,8 @@ public:
     std::string getInfoString() const override;
     double getCurrent(const Eigen::VectorXd& state) const override;
 
+    void updateHistory(const Eigen::VectorXd& voltages);
+
 private:
     double prevCurrent = 0.0;
     double prevVoltage = 0.0;
