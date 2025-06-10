@@ -65,10 +65,8 @@ double Capacitor::getCurrent(const Eigen::VectorXd& state) const {
     double v2 = (n2 >= 0) ? state(n2) : 0.0;
     double vC = v1 - v2;
 
-    // Use the backward Euler formula for capacitor current
-    if (lastDt > 0.0) {
-        return value * (vC - prevVoltage) / lastDt;
-    } else {
-        return 0.0;
-    }
+    // Use the Trapezoidal formula for capacitor current
+    double G_eq = (2.0 * value) / lastDt;
+    double I_eq = -G_eq * prevVoltage - prevCurrent;
+    return G_eq * vC + I_eq;
 }
