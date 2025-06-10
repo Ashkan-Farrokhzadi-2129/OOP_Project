@@ -207,14 +207,17 @@ void CircuitBuilder::runTransientPrint(double tStep, double tStop, const std::ve
         std::cout << t;
         for (const auto& var : variables) {
             if (var[0] == 'V') {
-                // Voltage: V(node)
-                std::string nodeName = var.substr(2, var.size() - 3);
-                int nodeNum = nodeNameToNumber.count(nodeName) ? nodeNameToNumber.at(nodeName) : -1;
-                if (nodeNum >= 0 && nodeNum < state.size())
-                    std::cout << "\t" << state(nodeNum);
-                else
+            std::string nodeName = var.substr(2, var.size() - 3);
+            int nodeNum = nodeNameToNumber.count(nodeName) ? nodeNameToNumber.at(nodeName) : -1;
+                if (nodeNum == 0) {
+                    std::cout << "\t0"; // Ground node is always 0V
+                } else if (nodeNum > 0 && nodeNum - 1 < state.size()) {
+                    std::cout << "\t" << state(nodeNum - 1);
+                } else {
                     std::cout << "\tNaN";
-            } else if (var[0] == 'I') {
+                }
+            }
+            else if (var[0] == 'I') {
                 // Current: I(element)
                 std::string elemId = var.substr(2, var.size() - 3);
                 double current = 0.0;

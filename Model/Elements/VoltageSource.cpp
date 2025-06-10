@@ -12,19 +12,16 @@ std::string VoltageSource::getType() const {
 void VoltageSource::stamp(CircuitMatrix& matrix) {
     int pos = node1->getNumber();
     int neg = node2->getNumber();
-    int vsIdx = getMatrixIndex(); // You need to provide this index when creating the voltage source
+    int vsIdx = getMatrixIndex();
 
-    // B and C matrices
-    if (pos >= 0) {
-        matrix.B(pos, vsIdx) = 1;
-        matrix.C(vsIdx, pos) = 1;
+    if (pos != 0) {
+        matrix.B(pos - 1, vsIdx) = 1;
+        matrix.C(vsIdx, pos - 1) = 1;
     }
-    if (neg >= 0) {
-        matrix.B(neg, vsIdx) = -1;
-        matrix.C(vsIdx, neg) = -1;
+    if (neg != 0) {
+        matrix.B(neg - 1, vsIdx) = -1;
+        matrix.C(vsIdx, neg - 1) = -1;
     }
-
-    // E vector
     matrix.E(vsIdx) = value;
 }
 
