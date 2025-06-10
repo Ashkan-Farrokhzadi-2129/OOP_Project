@@ -133,9 +133,13 @@ void CircuitBuilder::createNode(const std::string& nodeName) {
 }
 
 void CircuitBuilder::setGroundNode(const std::string& nodeName) {
-    if (nodeExists(nodeName)) {
-        groundNode = nodeNameToNumber[nodeName];
+    if (!nodeExists(nodeName)) return;
+    // Only allow one ground node (besides default 0)
+    if (groundNode != 0 && groundNode != nodeNameToNumber[nodeName]) {
+        std::cout << "Error: Multiple ground nodes are not allowed" << std::endl;
+        return;
     }
+    groundNode = nodeNameToNumber[nodeName];
 }
 
 void CircuitBuilder::deleteGroundNode(const std::string& nodeName) {

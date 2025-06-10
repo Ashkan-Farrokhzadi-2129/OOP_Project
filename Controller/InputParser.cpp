@@ -341,7 +341,7 @@ void InputParser::parseLine(const std::string& line) {
 
     // Add Voltage Source
 if (std::regex_match(line, match, addVoltageSourcePattern)) {
-    std::string id = std::string("V") + match[1].str(); // Prefix with 'V' for consistency
+    std::string id = match[1].str(); // Prefix with 'V' for consistency
     std::string node1 = match[2];
     std::string node2 = match[3];
     double value = std::stod(match[4]);
@@ -358,7 +358,7 @@ if (std::regex_match(line, match, addVoltageSourcePattern)) {
 
 // Add Current Source
 if (std::regex_match(line, match, addCurrentSourcePattern)) {
-    std::string id = std::string("I") + match[1].str(); // Prefix with 'I' for consistency
+    std::string id = match[1].str(); // Prefix with 'I' for consistency
     std::string node1 = match[2];
     std::string node2 = match[3];
     double value = std::stod(match[4]);
