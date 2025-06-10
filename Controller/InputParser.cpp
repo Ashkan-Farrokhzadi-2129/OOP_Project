@@ -330,6 +330,47 @@ void InputParser::parseLine(const std::string& line) {
 
     builder.runTransientPrint(tStep, tStop, variables);
     return;
+    }
+
+    static const std::regex addVoltageSourcePattern(
+    R"(^\s*add\s+VoltageSource(\w+)\s+(\w+)\s+(\w+)\s+([-+]?\d*\.?\d+(?:[eE][-+]?\d+)?)\s*$)"
+    );
+static const std::regex addCurrentSourcePattern(
+    R"(^\s*add\s+CurrentSource(\w+)\s+(\w+)\s+(\w+)\s+([-+]?\d*\.?\d+(?:[eE][-+]?\d+)?)\s*$)"
+    );
+
+    // Add Voltage Source
+if (std::regex_match(line, match, addVoltageSourcePattern)) {
+    std::string id = std::string("V") + match[1].str(); // Prefix with 'V' for consistency
+    std::string node1 = match[2];
+    std::string node2 = match[3];
+    double value = std::stod(match[4]);
+
+    if (builder.componentExists(id)) {
+        throw InputError("Error: Voltage source " + id + " already exists in the circuit");
+    }
+
+    int n1 = (node1 == "GND") ? 0 : std::stoi(node1.substr(1));
+    int n2 = (node2 == "GND") ? 0 : std::stoi(node2.substr(1));
+    builder.addVoltageSource(id, n1, n2, value);
+    return;
+}
+
+// Add Current Source
+if (std::regex_match(line, match, addCurrentSourcePattern)) {
+    std::string id = std::string("I") + match[1].str(); // Prefix with 'I' for consistency
+    std::string node1 = match[2];
+    std::string node2 = match[3];
+    double value = std::stod(match[4]);
+
+    if (builder.componentExists(id)) {
+        throw InputError("Error: Current source " + id + " already exists in the circuit");
+    }
+
+    int n1 = (node1 == "GND") ? 0 : std::stoi(node1.substr(1));
+    int n2 = (node2 == "GND") ? 0 : std::stoi(node2.substr(1));
+    builder.addCurrentSource(id, n1, n2, value);
+    return;
 }
 
     throw InputError("Error: Syntax error");
