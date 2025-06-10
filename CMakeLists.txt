@@ -41,4 +41,6 @@ add_executable(OOP_Project
         Controller/InputParser.h
         Model/Solvers/TimeSolver.cpp
         Model/Solvers/TimeSolver.h
+        Model/SchematicManager.cpp
+        Model/SchematicManager.h
 )

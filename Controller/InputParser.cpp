@@ -3,7 +3,9 @@
 #include <sstream>
 #include <iostream>
 #include <cctype>
+#include <fstream>
 #include "InputError.h"
+#include "SchematicManager.h"
 
 InputParser::InputParser(CircuitBuilder& builder) : builder(builder) {}
 
@@ -401,5 +403,50 @@ if (std::regex_match(line, match, renameNodePattern)) {
     return;
 }
 
+if (line == "-show existing schematics") {
+    SchematicManager manager("schematics"); // or your schematics directory
+    showSchematicMenu(manager);
+    return;
+}
+
+static const std::regex newFilePattern(R"(^\s*NewFile\s+(.+)\s*$)");
+if (std::regex_match(line, match, newFilePattern)) {
+    std::string filePath = match[1];
+    std::ifstream file(filePath);
+    if (!file) {
+        std::cout << "-Error : Inappropriate input" << std::endl;
+        return;
+    }
+    std::string line;
+    while (std::getline(file, line)) {
+        // Parse each line as a circuit element
+        parseLine(line); // or your element parser
+    }
+    std::cout << "File imported successfully.\n";
+    return;
+}
+
     throw InputError("Error: Syntax error");
+}
+
+void InputParser::showSchematicMenu(SchematicManager& manager) {
+    while (true) {
+        std::cout << "-choose existing schematic:\n";
+        auto files = manager.listSchematics();
+        for (size_t i = 0; i < files.size(); ++i) {
+            std::cout << (i + 1) << "-" << files[i] << std::endl;
+        }
+        std::string input;
+        std::getline(std::cin, input);
+        if (input == "return") return;
+        try {
+            int idx = std::stoi(input);
+            if (idx < 1 || idx > files.size()) throw std::out_of_range("out of range");
+            std::cout << files[idx - 1] << ":\n";
+            std::cout << manager.getSchematicContent(idx - 1);
+            // After showing, return to menu
+        } catch (...) {
+            std::cout << "-Error : Inappropriate input" << std::endl;
+        }
+    }
 }

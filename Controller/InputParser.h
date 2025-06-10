@@ -5,6 +5,7 @@
 #include <istream>
 #include "CircuitBuilder.h"
 #include "InputError.h"
+#include "SchematicManager.h"
 
 class InputParser {
 public:
@@ -15,6 +16,8 @@ public:
 
     // Parse multiple lines from an input stream (e.g., std::cin or file)
     void parseStream(std::istream& in);
+
+    void showSchematicMenu(SchematicManager& manager);
 
 private:
     CircuitBuilder& builder;
