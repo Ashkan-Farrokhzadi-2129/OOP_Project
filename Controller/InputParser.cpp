@@ -50,10 +50,10 @@ void InputParser::parseLine(const std::string& line) {
         }
 
         // Convert node names to numbers (e.g., N001 -> 1, GND -> 0)
-        int n1 = (node1 == "GND") ? 0 : std::stoi(node1.substr(1));
-        int n2 = (node2 == "GND") ? 0 : std::stoi(node2.substr(1));
+        // int n1 = (node1 == "GND") ? 0 : std::stoi(node1.substr(1));
+        // int n2 = (node2 == "GND") ? 0 : std::stoi(node2.substr(1));
 
-        builder.addResistor(id, n1, n2, value);
+        builder.addResistor(id, node1, node2, value);
         return;
     }
     if (std::regex_match(line, match, deleteResistorPattern)) {
@@ -123,10 +123,10 @@ void InputParser::parseLine(const std::string& line) {
         }
 
         // Convert node names to numbers (e.g., N001 -> 1, GND -> 0)
-        int n1 = (node1 == "GND") ? 0 : std::stoi(node1.substr(1));
-        int n2 = (node2 == "GND") ? 0 : std::stoi(node2.substr(1));
+        // int n1 = (node1 == "GND") ? 0 : std::stoi(node1.substr(1));
+        // int n2 = (node2 == "GND") ? 0 : std::stoi(node2.substr(1));
 
-        builder.addCapacitor(id, n1, n2, value);
+        builder.addCapacitor(id, node1, node2, value);
         return;
     }
 
@@ -194,10 +194,10 @@ void InputParser::parseLine(const std::string& line) {
         }
 
         // Convert node names to numbers (e.g., N001 -> 1, GND -> 0)
-        int n1 = (node1 == "GND") ? 0 : std::stoi(node1.substr(1));
-        int n2 = (node2 == "GND") ? 0 : std::stoi(node2.substr(1));
+        // int n1 = (node1 == "GND") ? 0 : std::stoi(node1.substr(1));
+        // int n2 = (node2 == "GND") ? 0 : std::stoi(node2.substr(1));
 
-        builder.addInductor(id, n1, n2, value);
+        builder.addInductor(id, node1, node2, value);
         return;
     }
 
@@ -335,7 +335,7 @@ void InputParser::parseLine(const std::string& line) {
     static const std::regex addVoltageSourcePattern(
     R"(^\s*add\s+VoltageSource(\w+)\s+(\w+)\s+(\w+)\s+([-+]?\d*\.?\d+(?:[eE][-+]?\d+)?)\s*$)"
     );
-static const std::regex addCurrentSourcePattern(
+    static const std::regex addCurrentSourcePattern(
     R"(^\s*add\s+CurrentSource(\w+)\s+(\w+)\s+(\w+)\s+([-+]?\d*\.?\d+(?:[eE][-+]?\d+)?)\s*$)"
     );
 
@@ -350,9 +350,9 @@ if (std::regex_match(line, match, addVoltageSourcePattern)) {
         throw InputError("Error: Voltage source " + id + " already exists in the circuit");
     }
 
-    int n1 = (node1 == "GND") ? 0 : std::stoi(node1.substr(1));
-    int n2 = (node2 == "GND") ? 0 : std::stoi(node2.substr(1));
-    builder.addVoltageSource(id, n1, n2, value);
+    // int n1 = (node1 == "GND") ? 0 : std::stoi(node1.substr(1));
+    // int n2 = (node2 == "GND") ? 0 : std::stoi(node2.substr(1));
+    builder.addVoltageSource(id, node1, node2, value);
     return;
 }
 
@@ -367,9 +367,9 @@ if (std::regex_match(line, match, addCurrentSourcePattern)) {
         throw InputError("Error: Current source " + id + " already exists in the circuit");
     }
 
-    int n1 = (node1 == "GND") ? 0 : std::stoi(node1.substr(1));
-    int n2 = (node2 == "GND") ? 0 : std::stoi(node2.substr(1));
-    builder.addCurrentSource(id, n1, n2, value);
+    // int n1 = (node1 == "GND") ? 0 : std::stoi(node1.substr(1));
+    // int n2 = (node2 == "GND") ? 0 : std::stoi(node2.substr(1));
+    builder.addCurrentSource(id, node1, node2, value);
     return;
 }
 

@@ -17,14 +17,14 @@ class CircuitBuilder {
 public:
     CircuitBuilder();
 
-    Node* getOrCreateNode(int nodeNumber);
+    Node* getOrCreateNode(const std::string& nodeName);
 
-    void addResistor(const std::string& id, int n1, int n2, double value);
-    void addVoltageSource(const std::string& id, int n1, int n2, double value);
-    void addCurrentSource(const std::string& id, int n1, int n2, double value);
+    void addResistor(const std::string& id, const std::string& n1, const std::string& n2, double value);
+    void addVoltageSource(const std::string& id, const std::string& n1, const std::string& n2, double value);
+    void addCurrentSource(const std::string& id, const std::string& n1, const std::string& n2, double value);
     void setGroundNode(int nodeNumber);
-    void addCapacitor(const std::string& id, int n1, int n2, double capacitance);
-    void addInductor(const std::string& id, int n1, int n2, double inductance);
+    void addCapacitor(const std::string& id, const std::string& n1, const std::string& n2, double capacitance);
+    void addInductor(const std::string& id, const std::string& n1, const std::string& n2, double inductance);
 
     CircuitMatrix buildMatrix();
 
@@ -55,6 +55,7 @@ public:
 
 private:
     std::unordered_map<std::string, int> nodeNameToNumber; // NEW: maps node name to number
+    std::unordered_map<int, std::string> nodeNumberToName; // number -> name
     std::unordered_map<int, Node*> nodes;
     std::vector<Edge*> edges;
     int voltageSourceCount;
