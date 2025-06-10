@@ -14,6 +14,7 @@ private:
     int number;
     double potential;
     std::vector<Edge*> connectedEdges;  // raw pointers, or use smart pointers if you prefer
+    std::string name;
 
 public:
     // Constructor
@@ -31,6 +32,11 @@ public:
     // Manage edges
     void addEdge(Edge* edge);
     void removeEdge(Edge* edge);
+
+    // In Node.h
+    void setName(const std::string& newName) { name = newName; }
+
+    std::string getName() const { return name; }
 };
 
 #endif // NODE_H

@@ -373,5 +373,33 @@ if (std::regex_match(line, match, addCurrentSourcePattern)) {
     return;
 }
 
+
+static const std::regex renameNodePattern(
+    R"(^\s*\.rename\s+node\s+(\w+)\s+(\w+)\s*$)"
+);
+
+if (std::regex_match(line, match, renameNodePattern)) {
+    std::string oldName = match[1];
+    std::string newName = match[2];
+
+    // Check if old node exists
+    if (!builder.nodeExists(oldName)) {
+        std::cout << "ERROR: Node " << oldName << " does not exist in the circuit" << std::endl;
+        return;
+    }
+    // Check if new node name already exists
+    if (builder.nodeExists(newName)) {
+        std::cout << "ERROR: Node name " << newName << " already exists" << std::endl;
+        return;
+    }
+    // Call the rename function
+    if (builder.renameNode(oldName, newName)) {
+        std::cout << "SUCCESS: Node renamed from " << oldName << " to " << newName << std::endl;
+    } else {
+        std::cout << "ERROR: Could not rename node (internal error)" << std::endl;
+    }
+    return;
+}
+
     throw InputError("Error: Syntax error");
 }

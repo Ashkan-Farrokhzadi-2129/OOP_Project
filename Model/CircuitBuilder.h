@@ -53,6 +53,9 @@ public:
     void runTransientAnalysis(double tStep, double tStop);
     void runTransientPrint(double tStep, double tStop, const std::vector<std::string>& variables);
 
+
+    bool renameNode(const std::string& oldName, const std::string& newName);
+
 private:
     std::unordered_map<std::string, int> nodeNameToNumber; // NEW: maps node name to number
     std::unordered_map<int, std::string> nodeNumberToName; // number -> name

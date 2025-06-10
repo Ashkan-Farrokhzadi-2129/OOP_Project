@@ -251,3 +251,22 @@ bool CircuitBuilder::componentExists(const std::string& id) const {
     }
     return false;
 }
+
+
+bool CircuitBuilder::renameNode(const std::string& oldName, const std::string& newName) {
+    if (!nodeExists(oldName) || nodeExists(newName)) return false;
+
+    int nodeNum = nodeNameToNumber[oldName];
+    nodeNameToNumber.erase(oldName);
+    nodeNameToNumber[newName] = nodeNum;
+    nodeNumberToName[nodeNum] = newName;
+
+    // Update all edges that reference this node
+    for (auto* edge : edges) {
+        if (edge->getNode1()->getName() == oldName)
+            edge->getNode1()->setName(newName);
+        if (edge->getNode2()->getName() == oldName)
+            edge->getNode2()->setName(newName);
+    }
+    return true;
+}
