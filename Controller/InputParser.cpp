@@ -426,6 +426,24 @@ if (std::regex_match(line, match, newFilePattern)) {
     return;
 }
 
+    static const std::regex savePattern(R"(^\s*\.save\s+(.+)\s*$)");
+    if (std::regex_match(line, match, savePattern)) {
+    std::string filePath = match[1];
+    std::ofstream out(filePath);
+    if (!out) {
+        std::cout << "-Error : Inappropriate input" << std::endl;
+        return;
+    }
+    // Save all components
+    auto components = builder.getComponentList(); // returns vector<string>
+    for (const auto& comp : components) {
+        out << comp << std::endl;
+    }
+    out.close();
+    std::cout << "Circuit saved to " << filePath << std::endl;
+    return;
+    }
+
     throw InputError("Error: Syntax error");
 }
 
